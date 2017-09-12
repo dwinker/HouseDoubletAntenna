@@ -3,12 +3,12 @@
 use strict;
 
 my $TEL = 114.075; # Total Element Length - cut the wires this long.
-my $AH  = 37.0;   # Apex height
-my $FH  = 23.0;   # Feed height
-my $WTH = 23.0;   # West Tree height
-my $WD  = 0.002;  # Wire diameter
-my $AML = 1.6;    # Apex mount length. Length from middle of pole to outside hole of insulator.
-my $FML = 0.15;   # Feed mount length.
+my $AH  = 37.25;   # Apex height (correct wrt. back of house)
+my $FH  = 22.6;    # Feed height (correct wrt. back of house)
+my $WTH = 23.0;    # West Tree height
+my $WD  = (0.0403 / 12.0);  # Wire diameter (18 ga. in feet)
+my $AML = 1.6;     # Apex mount length. Length from middle of pole to outside hole of insulator.
+my $FML = 0.15;    # Feed mount length.
 
 my $fl   = sqrt(($AML - $FML)**2 + ($AH - $FH)**2); # Feeder length (from a^2 + b^2 = c^2).
 my $wl   = $TEL - $fl;              # Wire Length
