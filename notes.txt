@@ -1,0 +1,23 @@
+Peak of house 21' 5.5" wrt back of house.
+Peak of shed  19' 5"   wrt front of shed.
+
+58" bottom of short pipe to crimp.
+    => 118" bottom of long pipe to crimp.
+
+13.5" top of roof to bottom of pipe.
+
+Pipe is 1.25" OD
+
+Phone camera 5.4' above floor.
+
+Wires attached to house tripod 3" above bottom of pole.
+
+House roof 71 deg slope.
+
+Shed tripod 109' from same point on house tripod.
+Shed roof  2.5 deg down from standing on house roof measured with phone.
+Shed ground 14 deg down from standing on house roof measured with phone.
+
+West tree 127' from house tripod (13.5" + 3" = 16.5") above peak of roof.
+
+North tree 107' from house tripod (13.5" + 3" = 16.5") above peak of roof.
