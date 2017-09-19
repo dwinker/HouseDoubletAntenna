@@ -2,13 +2,13 @@
 
 use strict;
 
-my $TEL = 114.075; # Total Element Length - cut the wires this long.
+my $TEL = 110; # Total Element Length - cut the wires this long.
 my $AH  = 37.25;   # Apex height (correct wrt. back of house)
-my $FH  = 22.6;    # Feed height (correct wrt. back of house)
-my $WTH = 23.0;    # West Tree height
+my $FH  = 27.6;    # Feed height
+my $WTH = 15.5;    # West Tree height (correct)
 my $WD  = (0.0403 / 12.0);  # Wire diameter (18 ga. in feet)
-my $AML = 1.6;     # Apex mount length. Length from middle of pole to outside hole of insulator.
-my $FML = 0.15;    # Feed mount length.
+my $AML = (32.0 /12.0);     # Apex mount length. Length from middle of pole to outside hole of insulator. (correct)
+my $FML = 0.5 ;    # Feed mount length.
 
 my $fl   = sqrt(($AML - $FML)**2 + ($AH - $FH)**2); # Feeder length (from a^2 + b^2 = c^2).
 my $wl   = $TEL - $fl;              # Wire Length
@@ -17,14 +17,14 @@ my $fne  = int(($fl / 1.64) + 0.5); # Number elements in feeder.
 
 # Move parameters wrt. origin for wire to West Tree.
 my $ROX_WT =  0.0;
-my $ROY_WT = 10.0;
-my $ROZ_WT = -5.0; # Horizontal angle of doublet away from perfectly straight.
+my $ROY_WT =  7.8; # (correct)
+my $ROZ_WT =  0.0; # Horizontal angle of doublet away from perfectly straight. (correct)
 my $YS_WT  =  0.0;
 my $xs_wt  = $AML;
 
 # Move parameters wrt. origin for wire to Shed.
 my $ROX_S  =   0.0;
-my $ROY_S  = -10.0;
+my $ROY_S  =  -2.3; # (correct)
 my $ROZ_S  =   0.0;
 my $YS_S   =   0.0;
 my $xs_s   = -$AML;
