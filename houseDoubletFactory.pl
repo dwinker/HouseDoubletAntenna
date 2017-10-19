@@ -10,6 +10,7 @@ my $FH  = 27.6;  # Feed height
 my $WD  = (0.0403 / 12.0);  # Wire diameter (18 ga. in feet)
 my $AML = (32.0 /12.0);     # Apex mount length. Length from middle of pole to outside hole of insulator. (correct)
 my $FML = 0.5 ;    # Feed mount length.
+my $NT_SHORTER = 2.5; # The North Tree wire is this much shorter than the other two wires.
 
 my $fl   = sqrt(($AML - $FML)**2 + ($AH - $FH)**2); # Feeder length (from a^2 + b^2 = c^2).
 my $wl   = $TEL - $fl;              # Wire Length
@@ -32,8 +33,8 @@ my $xs_s   = $AML * cos($ROZ_S * $pi / 180);
 
 # Move parameters wrt. origin for wire to North Tree.
 my $ROX_NT =   0.0;
-my $ROY_NT =  10.0;
-my $ROZ_NT = 270.0;
+my $ROY_NT =   5.8; # (correct)
+my $ROZ_NT = 257.0;
 my $ys_nt  = $AML * sin($ROZ_NT * $pi / 180);
 my $xs_nt  = $AML * cos($ROZ_NT * $pi / 180);
 
@@ -48,23 +49,23 @@ CE --- End Comments ---
 
 EOT1
 
-print( "# West Tree\n");
+print( "# West Tree Wire\n");
 print( "#  TAG    N       x1      y1      z1       x2      y2      z2  diameter\n");
 printf("GW   1   %2d  %7.2f %7.2f %7.2f  %7.2f %7.2f %7.2f  %5.3f\n", $wne, $wl, 0.0, 0.0, 0.0, 0.0, 0.0, $WD);
 print( "# ITGI NRPT      ROX     ROY     ROZ       XS      YS      ZS  ITS\n");
 printf("GM   0    0  %7.2f %7.2f %7.2f  %7.2f %7.2f %7.2f  1\n", $ROX_WT, $ROY_WT, $ROZ_WT, $xs_wt, $ys_wt, $AH);
 print( "\n");
 
-print( "# Shed\n");
+print( "# Shed Wire\n");
 print( "#  TAG    N       x1      y1      z1       x2      y2      z2  diameter\n");
 printf("GW   2   %2d  %7.2f %7.2f %7.2f  %7.2f %7.2f %7.2f  %5.3f\n", $wne, $wl, 0.0, 0.0, 0.0, 0.0, 0.0, $WD);
 print( "# ITGI NRPT      ROX     ROY     ROZ       XS      YS      ZS  ITS\n");
 printf("GM   0    0  %7.2f %7.2f %7.2f  %7.2f %7.2f %7.2f  2\n", $ROX_S,  $ROY_S,  $ROZ_S,  $xs_s,  $ys_s,  $AH);
 print( "\n");
 
-print( "# North Tree\n");
+print( "# North Tree Wire\n");
 print( "#  TAG    N       x1      y1      z1       x2      y2      z2  diameter\n");
-printf("GW   3   %2d  %7.2f %7.2f %7.2f  %7.2f %7.2f %7.2f  %5.3f\n", $wne, $wl, 0.0, 0.0, 0.0, 0.0, 0.0, $WD);
+printf("GW   3   %2d  %7.2f %7.2f %7.2f  %7.2f %7.2f %7.2f  %5.3f\n", $wne, $wl - $NT_SHORTER, 0.0, 0.0, 0.0, 0.0, 0.0, $WD);
 print( "# ITGI NRPT      ROX     ROY     ROZ       XS      YS      ZS  ITS\n");
 printf("GM   0    0  %7.2f %7.2f %7.2f  %7.2f %7.2f %7.2f  3\n", $ROX_NT, $ROY_NT, $ROZ_NT, $xs_nt, $ys_nt, $AH);
 print( "\n");
