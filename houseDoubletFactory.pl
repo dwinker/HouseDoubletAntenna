@@ -2,10 +2,11 @@
 
 use strict;
 
+my $pi = 4 * atan2(1, 1);   # 3.14159...
+
 my $TEL = 118.0; # Total Element Length - cut the wires this long (correct).
 my $AH  = 37.25; # Apex height (correct wrt. back of house)
 my $FH  = 27.6;  # Feed height
-my $WTH = 15.5;  # West Tree height (correct)
 my $WD  = (0.0403 / 12.0);  # Wire diameter (18 ga. in feet)
 my $AML = (32.0 /12.0);     # Apex mount length. Length from middle of pole to outside hole of insulator. (correct)
 my $FML = 0.5 ;    # Feed mount length.
@@ -19,15 +20,22 @@ my $fne  = int(($fl / 1.64) + 0.5); # Number elements in feeder.
 my $ROX_WT =  0.0;
 my $ROY_WT =  7.8; # (correct)
 my $ROZ_WT =  0.0; # Horizontal angle of doublet away from perfectly straight. (correct)
-my $YS_WT  =  0.0;
-my $xs_wt  = $AML;
+my $ys_wt  = $AML * sin($ROZ_WT * $pi / 180);
+my $xs_wt  = $AML * cos($ROZ_WT * $pi / 180);
 
 # Move parameters wrt. origin for wire to Shed.
 my $ROX_S  =   0.0;
-my $ROY_S  =  -2.3; # (correct)
-my $ROZ_S  =   0.0;
-my $YS_S   =   0.0;
-my $xs_s   = -$AML;
+my $ROY_S  =   2.3; # (correct)
+my $ROZ_S  = 180.0;
+my $ys_s   = $AML * sin($ROZ_S * $pi / 180);
+my $xs_s   = $AML * cos($ROZ_S * $pi / 180);
+
+# Move parameters wrt. origin for wire to North Tree.
+my $ROX_NT =   0.0;
+my $ROY_NT =  10.0;
+my $ROZ_NT = 270.0;
+my $ys_nt  = $AML * sin($ROZ_NT * $pi / 180);
+my $xs_nt  = $AML * cos($ROZ_NT * $pi / 180);
 
 print <<EOT1;
 CM Geometric model of main house antenna.
@@ -40,22 +48,33 @@ CE --- End Comments ---
 
 EOT1
 
+print( "# West Tree\n");
 print( "#  TAG    N       x1      y1      z1       x2      y2      z2  diameter\n");
 printf("GW   1   %2d  %7.2f %7.2f %7.2f  %7.2f %7.2f %7.2f  %5.3f\n", $wne, $wl, 0.0, 0.0, 0.0, 0.0, 0.0, $WD);
 print( "# ITGI NRPT      ROX     ROY     ROZ       XS      YS      ZS  ITS\n");
-printf("GM   0    0  %7.2f %7.2f %7.2f  %7.2f %7.2f %7.2f  1\n", $ROX_WT, $ROY_WT, $ROZ_WT, $xs_wt, $YS_WT, $AH);
+printf("GM   0    0  %7.2f %7.2f %7.2f  %7.2f %7.2f %7.2f  1\n", $ROX_WT, $ROY_WT, $ROZ_WT, $xs_wt, $ys_wt, $AH);
 print( "\n");
 
+print( "# Shed\n");
 print( "#  TAG    N       x1      y1      z1       x2      y2      z2  diameter\n");
-printf("GW   2   %2d  %7.2f %7.2f %7.2f  %7.2f %7.2f %7.2f  %5.3f\n", $wne, 0.0, 0.0, 0.0, -$wl, 0.0, 0.0, $WD);
+printf("GW   2   %2d  %7.2f %7.2f %7.2f  %7.2f %7.2f %7.2f  %5.3f\n", $wne, $wl, 0.0, 0.0, 0.0, 0.0, 0.0, $WD);
 print( "# ITGI NRPT      ROX     ROY     ROZ       XS      YS      ZS  ITS\n");
-printf("GM   0    0  %7.2f %7.2f %7.2f  %7.2f %7.2f %7.2f  2\n", $ROX_S,  $ROY_S,  $ROZ_S,  $xs_s,  $YS_S,  $AH);
+printf("GM   0    0  %7.2f %7.2f %7.2f  %7.2f %7.2f %7.2f  2\n", $ROX_S,  $ROY_S,  $ROZ_S,  $xs_s,  $ys_s,  $AH);
 print( "\n");
 
+print( "# North Tree\n");
 print( "#  TAG    N       x1      y1      z1       x2      y2      z2  diameter\n");
-printf("GW   3   %2d  %7.2f %7.2f %7.2f  %7.2f %7.2f %7.2f  %5.3f\n", $fne,  $AML, 0.0, $AH,  $FML, 0.0, $FH, $WD);
-printf("GW   4   %2d  %7.2f %7.2f %7.2f  %7.2f %7.2f %7.2f  %5.3f\n", $fne, -$AML, 0.0, $AH, -$FML, 0.0, $FH, $WD);
-printf("GW   5   %2d  %7.2f %7.2f %7.2f  %7.2f %7.2f %7.2f  %5.3f\n",    1,  $FML, 0.0, $FH, -$FML, 0.0, $FH, $WD);
+printf("GW   3   %2d  %7.2f %7.2f %7.2f  %7.2f %7.2f %7.2f  %5.3f\n", $wne, $wl, 0.0, 0.0, 0.0, 0.0, 0.0, $WD);
+print( "# ITGI NRPT      ROX     ROY     ROZ       XS      YS      ZS  ITS\n");
+printf("GM   0    0  %7.2f %7.2f %7.2f  %7.2f %7.2f %7.2f  3\n", $ROX_NT, $ROY_NT, $ROZ_NT, $xs_nt, $ys_nt, $AH);
+print( "\n");
+
+print( "# Feeder\n");
+print( "#  TAG    N       x1      y1      z1       x2      y2      z2  diameter\n");
+printf("GW   4   %2d  %7.2f %7.2f %7.2f  %7.2f %7.2f %7.2f  %5.3f\n", $fne,  $xs_wt, $ys_wt, $AH,  $FML,   0.0, $FH, $WD);
+printf("GW   5   %2d  %7.2f %7.2f %7.2f  %7.2f %7.2f %7.2f  %5.3f\n", $fne,  $xs_s,  $ys_s,  $AH, -$FML,   0.0, $FH, $WD);
+printf("GW   6   %2d  %7.2f %7.2f %7.2f  %7.2f %7.2f %7.2f  %5.3f\n", $fne,  $xs_nt, $ys_nt, $AH,   0.0, -$FML, $FH, $WD);
+printf("GW  10   %2d  %7.2f %7.2f %7.2f  %7.2f %7.2f %7.2f  %5.3f\n",    1,  $FML,     0.0,  $FH, -$FML,   0.0, $FH, $WD);
 print( "\n");
 
 print <<EOT;
@@ -64,7 +83,7 @@ GS  0 0 0.30480
 GE  1
 
 # voltsrc element segment      real volts
-EX  0        5       1      0    1.00      0.00 0.00 0.00 0.00 0.00       
+EX  0       10       1      0    1.00      0.00 0.00 0.00 0.00 0.00       
 
 # linear nfrq       fmhz   delfrq
 FR  0     55  0  0  3.00    0.50   30.00  0.00  0.00  0.00       
