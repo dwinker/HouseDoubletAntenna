@@ -75,7 +75,24 @@ print( "#  TAG    N       x1      y1      z1       x2      y2      z2  diameter\
 printf("GW   4   %2d  %7.2f %7.2f %7.2f  %7.2f %7.2f %7.2f  %5.3f\n", $fne,  $xs_wt, $ys_wt, $AH,  $FML,   0.0, $FH, $WD);
 printf("GW   5   %2d  %7.2f %7.2f %7.2f  %7.2f %7.2f %7.2f  %5.3f\n", $fne,  $xs_s,  $ys_s,  $AH, -$FML,   0.0, $FH, $WD);
 printf("GW   6   %2d  %7.2f %7.2f %7.2f  %7.2f %7.2f %7.2f  %5.3f\n", $fne,  $xs_nt, $ys_nt, $AH,   0.0, -$FML, $FH, $WD);
+print( "\n");
+print( "# Drive West Tree Wire and Shed Wire\n");
 printf("GW  10   %2d  %7.2f %7.2f %7.2f  %7.2f %7.2f %7.2f  %5.3f\n",    1,  $FML,     0.0,  $FH, -$FML,   0.0, $FH, $WD);
+print( "\n");
+print( "# Drive West Tree Wire and North Tree Wire\n");
+printf("#W  10   %2d  %7.2f %7.2f %7.2f  %7.2f %7.2f %7.2f  %5.3f\n",    1,  $FML,     0.0,  $FH,   0.0, -$FML, $FH, $WD);
+print( "\n");
+print( "# Drive Shed Wire and North Tree Wire\n");
+printf("#W  10   %2d  %7.2f %7.2f %7.2f  %7.2f %7.2f %7.2f  %5.3f\n",    1, -$FML,     0.0,  $FH,   0.0, -$FML, $FH, $WD);
+print( "\n");
+print( "# Ground West Tree Wire\n");
+printf("#W  20   %2d  %7.2f %7.2f %7.2f  %7.2f %7.2f %7.2f  %5.3f\n",    1,  $FML,     0.0,  $FH,  $FML,   0.0, 0.0, $WD);
+print( "\n");
+print( "# Ground North Tree Wire\n");
+printf("GW  21   %2d  %7.2f %7.2f %7.2f  %7.2f %7.2f %7.2f  %5.3f\n",    1,   0.0,   -$FML,  $FH,   0.0, -$FML, 0.0, $WD);
+print( "\n");
+print( "# Shed Wire\n");
+printf("#W  22   %2d  %7.2f %7.2f %7.2f  %7.2f %7.2f %7.2f  %5.3f\n",    1, -$FML,     0.0,  $FH, -$FML,   0.0, 0.0, $WD);
 print( "\n");
 
 print <<EOT;
