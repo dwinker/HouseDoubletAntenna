@@ -40,29 +40,37 @@ GW  10    1     0.50    0.00   27.60    -0.50    0.00   27.60  0.003
 #W  10    1    -0.50    0.00   27.60     0.00   -0.50   27.60  0.003
 
 # Ground West Tree Wire
-GW  20    1     0.50    0.00   27.60     0.50    0.00    0.00  0.003
+#W  20   17     0.50    0.00   27.60     0.50    0.00    0.00  0.003
 
 # Ground North Tree Wire
-GW  21    1     0.00   -0.50   27.60     0.00   -0.50    0.00  0.003
+GW  21   17     0.00   -0.50   27.60     0.00   -0.50    0.00  0.003
 
-# Shed Wire
-GW  22    1    -0.50    0.00   27.60    -0.50    0.00    0.00  0.003
+# Ground Shed Wire
+#W  22   17    -0.50    0.00   27.60    -0.50    0.00    0.00  0.003
 
 # xnec2 style GS statement.
 GS  0 0 0.30480
-GE  1
+# Currents on segments touching the ground will go to zero at the ground.
+GE -1
 
 # voltsrc element segment      real volts
-EX  0       10       1      0    1.00      0.00 0.00 0.00 0.00 0.00       
+# Drive doublet
+EX  0       10       1      0    1.00      0.00 0.00 0.00 0.00 0.00
+# Drive West Tree wire against Ground
+#X  0       20       1      0    1.00      0.00 0.00 0.00 0.00 0.00
+# Drive North Tree wire against Ground
+#X  0       21       1      0    1.00      0.00 0.00 0.00 0.00 0.00
+# Drive Shed wire against Ground
+#X  0       22       1      0    1.00      0.00 0.00 0.00 0.00 0.00
 
 # linear nfrq       fmhz   delfrq
-FR  0     55  0  0  3.00    0.50   30.00  0.00  0.00  0.00       
+FR  0     55  0  0  3.00    0.50   30.00  0.00  0.00  0.00
 
 # Radiation Pattern
 #  normal nTheta nPhi  flags initTheta initPhi ThetaInc PhiInc RadialField GainNormalization
-RP   0      37    74    1000    0.00    0.00     2.50    5.00      0.00           0.00       
+RP   0      37    74    1000    0.00    0.00     2.50    5.00      0.00           0.00
 
 # finite noScreen       dielectricConstant Conductivity
-GN  2        0    0  0         12.00         0.01         0.00  0.00  0.00  0.00       
+GN  2        0    0  0         12.00         0.01         0.00  0.00  0.00  0.00
 
 EN

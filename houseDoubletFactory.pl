@@ -14,8 +14,10 @@ my $NT_SHORTER = 2.5; # The North Tree wire is this much shorter than the other 
 
 my $fl   = sqrt(($AML - $FML)**2 + ($AH - $FH)**2); # Feeder length (from a^2 + b^2 = c^2).
 my $wl   = $TEL - $fl;              # Wire Length
+my $gl   = $FH;                     # Ground wire length
 my $wne  = int(($wl / 1.64) + 0.5); # Number elements in wire. Elements approximately 0.5 meters long.
 my $fne  = int(($fl / 1.64) + 0.5); # Number elements in feeder.
+my $gne  = int(($gl / 1.64) + 0.5); # Number elements in ground wire.
 
 # Move parameters wrt. origin for wire to West Tree.
 my $ROX_WT =  0.0;
@@ -86,32 +88,40 @@ print( "# Drive Shed Wire and North Tree Wire\n");
 printf("#W  10   %2d  %7.2f %7.2f %7.2f  %7.2f %7.2f %7.2f  %5.3f\n",    1, -$FML,     0.0,  $FH,   0.0, -$FML, $FH, $WD);
 print( "\n");
 print( "# Ground West Tree Wire\n");
-printf("#W  20   %2d  %7.2f %7.2f %7.2f  %7.2f %7.2f %7.2f  %5.3f\n",    1,  $FML,     0.0,  $FH,  $FML,   0.0, 0.0, $WD);
+printf("#W  20   %2d  %7.2f %7.2f %7.2f  %7.2f %7.2f %7.2f  %5.3f\n", $gne,  $FML,     0.0,  $FH,  $FML,   0.0, 0.0, $WD);
 print( "\n");
 print( "# Ground North Tree Wire\n");
-printf("GW  21   %2d  %7.2f %7.2f %7.2f  %7.2f %7.2f %7.2f  %5.3f\n",    1,   0.0,   -$FML,  $FH,   0.0, -$FML, 0.0, $WD);
+printf("GW  21   %2d  %7.2f %7.2f %7.2f  %7.2f %7.2f %7.2f  %5.3f\n", $gne,   0.0,   -$FML,  $FH,   0.0, -$FML, 0.0, $WD);
 print( "\n");
-print( "# Shed Wire\n");
-printf("#W  22   %2d  %7.2f %7.2f %7.2f  %7.2f %7.2f %7.2f  %5.3f\n",    1, -$FML,     0.0,  $FH, -$FML,   0.0, 0.0, $WD);
+print( "# Ground Shed Wire\n");
+printf("#W  22   %2d  %7.2f %7.2f %7.2f  %7.2f %7.2f %7.2f  %5.3f\n", $gne, -$FML,     0.0,  $FH, -$FML,   0.0, 0.0, $WD);
 print( "\n");
 
 print <<EOT;
 # xnec2 style GS statement.
 GS  0 0 0.30480
-GE  1
+# Currents on segments touching the ground will go to zero at the ground.
+GE -1
 
 # voltsrc element segment      real volts
-EX  0       10       1      0    1.00      0.00 0.00 0.00 0.00 0.00       
+# Drive doublet
+EX  0       10       1      0    1.00      0.00 0.00 0.00 0.00 0.00
+# Drive West Tree wire against Ground
+#X  0       20       1      0    1.00      0.00 0.00 0.00 0.00 0.00
+# Drive North Tree wire against Ground
+#X  0       21       1      0    1.00      0.00 0.00 0.00 0.00 0.00
+# Drive Shed wire against Ground
+#X  0       22       1      0    1.00      0.00 0.00 0.00 0.00 0.00
 
 # linear nfrq       fmhz   delfrq
-FR  0     55  0  0  3.00    0.50   30.00  0.00  0.00  0.00       
+FR  0     55  0  0  3.00    0.50   30.00  0.00  0.00  0.00
 
 # Radiation Pattern
 #  normal nTheta nPhi  flags initTheta initPhi ThetaInc PhiInc RadialField GainNormalization
-RP   0      37    74    1000    0.00    0.00     2.50    5.00      0.00           0.00       
+RP   0      37    74    1000    0.00    0.00     2.50    5.00      0.00           0.00
 
 # finite noScreen       dielectricConstant Conductivity
-GN  2        0    0  0         12.00         0.01         0.00  0.00  0.00  0.00       
+GN  2        0    0  0         12.00         0.01         0.00  0.00  0.00  0.00
 
 EN
 EOT
