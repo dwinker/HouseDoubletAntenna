@@ -53,6 +53,9 @@ GS  0 0 0.30480
 # Currents on segments touching the ground will go to zero at the ground.
 GE -1
 
+# finite noScreen       dielectricConstant Conductivity
+GN  2        0    0  0         12.00         0.01         0.00  0.00  0.00  0.00
+
 # voltsrc element segment      real volts
 # Drive doublet
 EX  0       10       1      0    1.00      0.00 0.00 0.00 0.00 0.00
@@ -69,8 +72,5 @@ FR  0     55  0  0  3.00    0.50   30.00  0.00  0.00  0.00
 # Radiation Pattern
 #  normal nTheta nPhi  flags initTheta initPhi ThetaInc PhiInc RadialField GainNormalization
 RP   0      37    74    1000    0.00    0.00     2.50    5.00      0.00           0.00
-
-# finite noScreen       dielectricConstant Conductivity
-GN  2        0    0  0         12.00         0.01         0.00  0.00  0.00  0.00
 
 EN
